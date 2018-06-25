@@ -20,9 +20,8 @@ class ContactListPage extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log(state.contacts.error)
     return {
-        contactStore: state.contacts
+        contactStore: state.contactStore
     }
 }
 

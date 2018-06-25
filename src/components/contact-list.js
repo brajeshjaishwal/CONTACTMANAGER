@@ -6,8 +6,8 @@ export default function ContactList({contactStore}) {
 
     let contacts = contactStore.contacts
     let error = contactStore.error
-    console.log(contactStore)
-    console.log(error)
+    //console.log(contactStore)
+    //console.log(error)
 
     function renderCards() {
         return (error === null ? 
