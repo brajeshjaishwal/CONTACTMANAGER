@@ -1,7 +1,10 @@
 import { Globals } from "../actions/constants";
 
 const initialState = {
-    contacts: []
+    contacts: [],
+    contact: {},
+    loading: false,
+    error: null
 }
 
 export default (state = initialState, action = {}) => {
@@ -10,12 +13,26 @@ export default (state = initialState, action = {}) => {
         case Globals.FETCH_ALL:            
             return {
                 ...state, 
-                contacts: action.payload 
+                contacts: action.payload
+            }
+        case Globals.FETCH_ALL_PENDING:
+            return {
+                ...state,
+                loading: true,
+                error: null
+            }
+        case Globals.FETCH_ALL_REJECTED:
+            return {
+                ...state,
+                loading: false,
+                error: { global: action.payload.message}
             }
         case Globals.FETCH_ALL_FULFILLED://this is automatically called when FETCH_ALL is succeded
             return {
                 ...state,
-                contacts: action.payload.data.data || action.payload.data //in case pagination is disabled
+                contacts: action.payload.data.data || action.payload.data, //in case pagination is disabled
+                loading: false,
+                error: null
             }
         default:
             return state
