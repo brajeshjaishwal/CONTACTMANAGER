@@ -13,7 +13,7 @@ class ContactListPage extends Component {
         return (
             <div>
                 <h1>List of contacts</h1>
-                <ContactList contacts={this.props.contacts} />
+                <ContactList contactStore={this.props.contactStore} />
             </div>
         )
     }
@@ -21,7 +21,7 @@ class ContactListPage extends Component {
 
 function mapStateToProps(state) {
     return {
-        contacts: state.contacts
+        contactStore: state.contacts
     }
 }
 

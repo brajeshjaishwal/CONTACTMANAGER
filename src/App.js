@@ -6,8 +6,6 @@ import { Container } from 'semantic-ui-react';
 import { Route } from 'react-router-dom'
 import ContactListPage from './pages/contact-list-page';
 import ContactFormPage from './pages/contact-form-page';
-//import { Grid } from 'semantic-ui-react'
-//import 'semantic-ui-css/semantic.min.css'
 
 class App extends Component {
   render() {
