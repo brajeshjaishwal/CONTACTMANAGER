@@ -3,10 +3,10 @@ const initialState = {
     contacts: []
 }
 
-export default (state=initialState, action) => {
+export default (state = initialState, action = {}) => {
     switch(action.type) {
-        case 'FETCH_CONTACTS':
-            return { ...state, contacts: action.payload }
+        case 'FETCH':            
+            return {...state, contacts: action.payload }
         default:
             return state
     }
