@@ -39,7 +39,7 @@ class ContactForm extends Component {
   render() {
 
     return (
-      <form className="ui form">
+      <form className="ui form" onSubmit = {this.onSubmitHandler}>
         <div className="field">
           <label>First Name</label>
           <div className="two fields">
