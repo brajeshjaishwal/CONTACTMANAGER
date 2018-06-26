@@ -36,7 +36,7 @@ class ContactFormPage extends React.Component {
             {
                 this.state.redirect ?
                 <Redirect  to="/" /> :
-                <ContactForm contact={this.props.contact} onSubmit = {this.props.submitHandler} />
+                <ContactForm contact={this.props.contact} onSubmit = {this.submitHandler} />
             }
             </div>
         )
