@@ -6,18 +6,15 @@ export default function ContactList({contactStore}) {
 
     let contacts = contactStore.contacts
     let error = contactStore.error
-    //console.log(contactStore)
-    //console.log(error)
 
     function renderCards() {
         return (error === null ? 
-                        <div>
-                            <p>Contact list</p>
-                            <CardGroup>
-                            { contacts.map(contact => <ContactCard key={contact._id} contact={contact} ></ContactCard>) }
-                            </CardGroup> 
-                        </div> :
-                        <div className="html-error" >{error.global}</div>
+                        <CardGroup>
+                            { contacts.map(v => <ContactCard key={v._id} contact={v} />) }
+                        </CardGroup> :
+                        <div className="html-error" >
+                            {error.global}
+                        </div>
         )
     }
 
