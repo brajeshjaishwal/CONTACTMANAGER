@@ -17,3 +17,16 @@ export const fetchContact = (id) => {
         payload: client.get(`${url}/{id}`)
     }
 }
+
+export const newContact = () => {
+    return {
+        type: Globals.NEW_CONTACT
+    }
+}
+
+export const saveContact = (contact) => {
+    return {
+        type: Globals.SAVE_PENDING,
+        payload: client.post(url, contact)
+    }
+}

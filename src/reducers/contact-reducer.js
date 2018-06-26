@@ -34,6 +34,32 @@ export default (state = initialState, action = {}) => {
                 loading: false,
                 error: null
             }
+        case Globals.NEW_CONTACT:
+            return {
+                ...state,
+                contact: {},
+                loading: false,
+                error: null
+            }
+        case Globals.SAVE_PENDING:
+            return {
+                ...state,
+                loading: true,
+                error: null
+            }
+        case Globals.SAVE_FULFILLED:
+            return {
+                ...state,
+                contact: [...state.contacts, action.payload.data.data || action.payload.data],
+                loading: false,
+                error: null
+            }
+        case Globals.SAVE_REJECTED:
+            return {
+                ...state,
+                loading: false,
+                error: { global: action.payload.message}
+            }
         default:
             return state
     }
