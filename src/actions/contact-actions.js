@@ -26,7 +26,7 @@ export const newContact = () => {
 
 export const saveContact = (contact) => {
     return {
-        type: Globals.SAVE_PENDING,
+        type: Globals.SAVE,
         payload: client.post(url, contact)
     }
 }

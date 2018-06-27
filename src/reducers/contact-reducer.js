@@ -55,10 +55,11 @@ export default (state = initialState, action = {}) => {
                 error: null
             }
         case Globals.SAVE_REJECTED:
+            const errorData = action.payload.response.data
             return {
                 ...state,
                 loading: false,
-                error: { global: action.payload.message}
+                error: { global: errorData.message, fields: errorData.errors }
             }
         default:
             return state

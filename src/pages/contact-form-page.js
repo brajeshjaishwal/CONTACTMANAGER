@@ -22,11 +22,11 @@ class ContactFormPage extends React.Component {
         console.log(contact)
         this.props.saveContact(contact)
         .then(response => {
-            console.log(response)
+            //console.log(response)
             this.setState({redirect: true})
         })
         .catch(err => {
-            console.log(err)
+            //console.log(err)
         })
     }
     render() {
@@ -36,7 +36,7 @@ class ContactFormPage extends React.Component {
             {
                 this.state.redirect ?
                 <Redirect  to="/" /> :
-                <ContactForm contact={this.props.contact} onSubmit = {this.submitHandler} />
+                <ContactForm contact={this.props.contact}  errors={this.props.error} onSubmit = {this.submitHandler} />
             }
             </div>
         )

@@ -1,7 +1,8 @@
 // src/components/contact-form
 
 import React, { Component } from 'react';
-import {Button} from 'semantic-ui-react'
+import { Button, Input } from 'semantic-ui-react'
+import 'semantic-ui-css/semantic.min.css'
 
 class ContactForm extends Component {
 
@@ -35,32 +36,40 @@ class ContactForm extends Component {
 
   render() {
 
+    const errors = this.props.errors
+    const firstNameError = errors && errors.fields["name.first"]
+    const phoneError = errors && errors.fields.phone
+    const emailError = errors && errors.fields.email
     return (
-      <form className="ui form" onSubmit = {this.onSubmitHandler}>
+      <form className="ui form" onSubmit = {this.onSubmitHandler}
+        fields = {{"name.first": 'empty', "name.last": 'empty'}}>
         <div className="field">
           <label>First Name</label>
           <div className="two fields">
-          <input name="name.first" placeholder="First Name (Brajesh)" type="text" 
+          <Input name="name.first" placeholder="First Name (Brajesh)" type="text" 
             onChange = {this.changeEventHandler} 
-            defaultValue={this.state["name.first"]} />
-          <input name="name.last" placeholder="Last Name (Jaishwal)" type="text"              
+            defaultValue={this.state["name.first"]}
+            error = {firstNameError}
+            />
+          <Input name="name.last" placeholder="Last Name (Jaishwal)" type="text"              
             onChange = {this.changeEventHandler} 
             defaultValue={this.state["name.last"]}/>
           </div>
         </div>
         <div className="field">
           <label>Phone</label>
-          <input name="phone" placeholder="Phone Number (+919413844898)" type="text"              
+          <Input name="phone" placeholder="Phone Number (+919413844898)" type="text"              
             onChange = {this.changeEventHandler} 
-            defaultValue={this.state.phone}/>
+            defaultValue={this.state.phone}
+            error={phoneError}/>
         </div>
         <div className="field">
           <label>Email</label>
-          <input name="email" placeholder="Email Address (abc@abc.com)" type="text"              
+          <Input name="email" placeholder="Email Address (abc@abc.com)" type="text"              
             onChange = {this.changeEventHandler} 
-            defaultValue={this.state.email}/>
+            defaultValue={this.state.email}
+            error = {emailError}/>
         </div>
-
         <Button>Submit</Button>
       </form>    
     )
