@@ -46,18 +46,6 @@ class ContactForm extends Component {
     this.props.onSubmit(tmpContact);
   }
 
-  renderField ({name, type, label, defaultValue, error }) {
-    return (
-      <Form.Field>
-        <label>{label}</label>
-        <Input name={name} placeholder={label} type={type} 
-          onChange = {this.changeEventHandler}
-          defaultValue = {defaultValue} />
-          <span className="error">{error ? error.message : ""}</span>
-      </Form.Field>
-    )
-  }
-
   render() {
 
     const errors = this.props.errors
