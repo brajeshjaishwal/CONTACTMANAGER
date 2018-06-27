@@ -1,9 +1,21 @@
 // src/components/contact-form
 
 import React, { Component } from 'react';
-import { Button, Input } from 'semantic-ui-react'
+import { Form, Button, Input } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 
+function TextField({name, type, label, defaultValue, error, onChange })
+{
+  return (
+    <Form.Field>
+      <label>{label}</label>
+      <Input name={name} placeholder={label} type={type} 
+        onChange = {onChange}
+        defaultValue = {defaultValue} />
+        <span className="error">{error ? error.message : ""}</span>
+    </Form.Field>
+  )
+}
 class ContactForm extends Component {
 
   constructor(props)
@@ -34,44 +46,37 @@ class ContactForm extends Component {
     this.props.onSubmit(tmpContact);
   }
 
+  renderField ({name, type, label, defaultValue, error }) {
+    return (
+      <Form.Field>
+        <label>{label}</label>
+        <Input name={name} placeholder={label} type={type} 
+          onChange = {this.changeEventHandler}
+          defaultValue = {defaultValue} />
+          <span className="error">{error ? error.message : ""}</span>
+      </Form.Field>
+    )
+  }
+
   render() {
 
     const errors = this.props.errors
     const firstNameError = errors && errors.fields["name.first"]
     const phoneError = errors && errors.fields.phone
     const emailError = errors && errors.fields.email
+    console.log(emailError)
     return (
-      <form className="ui form" onSubmit = {this.onSubmitHandler}
-        fields = {{"name.first": 'empty', "name.last": 'empty'}}>
-        <div className="field">
-          <label>First Name</label>
-          <div className="two fields">
-          <Input name="name.first" placeholder="First Name (Brajesh)" type="text" 
-            onChange = {this.changeEventHandler} 
-            defaultValue={this.state["name.first"]}
-            error = {firstNameError}
-            />
-          <Input name="name.last" placeholder="Last Name (Jaishwal)" type="text"              
-            onChange = {this.changeEventHandler} 
-            defaultValue={this.state["name.last"]}/>
-          </div>
-        </div>
-        <div className="field">
-          <label>Phone</label>
-          <Input name="phone" placeholder="Phone Number (+919413844898)" type="text"              
-            onChange = {this.changeEventHandler} 
-            defaultValue={this.state.phone}
-            error={phoneError}/>
-        </div>
-        <div className="field">
-          <label>Email</label>
-          <Input name="email" placeholder="Email Address (abc@abc.com)" type="text"              
-            onChange = {this.changeEventHandler} 
-            defaultValue={this.state.email}
-            error = {emailError}/>
-        </div>
+      <Form className="ui form" onSubmit = {this.onSubmitHandler}>
+        <TextField name="name.first" label="First Name" defaultValue={this.state["name.first"]} 
+                  error= {firstNameError} onChange={this.changeEventHandler} />
+        <TextField name="name.last" label="Last Name" defaultValue={this.state["name.last"]} 
+                  onChange={this.changeEventHandler} />
+        <TextField name="phone" label="Phone number" defaultValue={this.state.phone} 
+                  error= {phoneError} onChange={this.changeEventHandler} />
+        <TextField name="email" label="Email" defaultValue={this.state.email} 
+                  error= {emailError} onChange={this.changeEventHandler} />
         <Button>Submit</Button>
-      </form>    
+      </Form>    
     )
   }
 }
