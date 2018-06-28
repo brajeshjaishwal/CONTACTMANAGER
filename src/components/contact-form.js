@@ -21,12 +21,41 @@ class ContactForm extends Component {
   constructor(props)
   {
     super(props);
+    const { contact } = props
+    console.log("contact form constructor")
+    console.log(contact)
+    
     this.state = {
-      "name.first": "",
-      "name.last": "" ,
-      phone: "",
-      email: ""
+      _id: contact._id,
+      "name.first": contact["name.first"] || "",
+      "name.last": contact["name.last"] ||  "" ,
+      phone: contact.phone || "",
+      email: contact.email || ""
     };
+
+    console.log("state object")
+    console.log(this.state)
+  }
+
+  componentWillReceiveProps = nextProps => {
+    
+    const {contact} = nextProps
+    console.log("component will receive porps")
+    console.log(contact)
+    this.state = {
+      _id: this.contact._id,
+      "name.first": this.contact["name.first"] || "",
+      "name.last": this.contact["name.last"] ||  "" ,
+      phone: this.contact.phone || "",
+      email: this.contact.email || ""
+    };
+    console.log('updated state')
+    console.log(this.state)
+    if(this.props._id !== contact._id) 
+    {
+      this.forceUpdate()
+    }
+    
   }
 
   changeEventHandler = (event) => {
@@ -52,7 +81,8 @@ class ContactForm extends Component {
     const firstNameError = errors && errors.fields["name.first"]
     const phoneError = errors && errors.fields.phone
     const emailError = errors && errors.fields.email
-    console.log(emailError)
+    console.log('contact-from render method')
+    console.log(this.props)
     return (
       <Form className="ui form" onSubmit = {this.onSubmitHandler}>
         <TextField name="name.first" label="First Name" defaultValue={this.state["name.first"]} 
