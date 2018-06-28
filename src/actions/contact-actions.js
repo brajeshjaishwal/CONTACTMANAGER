@@ -37,3 +37,10 @@ export const updateContact = (contact) => {
         payload: client.put(`${url}/${contact._id}`, contact)
     }
 }
+
+export const getLocalContact = (id) => {
+    return {
+        type: Globals.GET_LOCAL,
+        payload: id
+    }
+}

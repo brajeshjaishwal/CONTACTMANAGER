@@ -21,43 +21,18 @@ class ContactForm extends Component {
   constructor(props)
   {
     super(props);
-    const { contact } = props
-    console.log("contact form constructor")
-    console.log(contact)
-    
+    let contact = this.props.contact
+
     this.state = {
       _id: contact._id,
-      "name.first": contact["name.first"] || "",
-      "name.last": contact["name.last"] ||  "" ,
-      phone: contact.phone || "",
-      email: contact.email || ""
+      "name.first": contact.name.first,
+      "name.last": contact.name.last,
+      phone: contact.phone,
+      email: contact.email,
+      create: contact._id === null
     };
-
-    console.log("state object")
-    console.log(this.state)
   }
-
-  componentWillReceiveProps = nextProps => {
-    
-    const {contact} = nextProps
-    console.log("component will receive porps")
-    console.log(contact)
-    this.state = {
-      _id: contact._id,
-      "name.first": contact["name.first"] || "",
-      "name.last": contact["name.last"] ||  "" ,
-      phone: contact.phone || "",
-      email: contact.email || ""
-    };
-    console.log('updated state')
-    console.log(this.state)
-    if(this.props._id !== contact._id) 
-    {
-      this.forceUpdate()
-    }
-    
-  }
-
+  
   changeEventHandler = (event) => {
     this.setState({[event.target.name]: event.target.value})
   }
@@ -65,6 +40,7 @@ class ContactForm extends Component {
   onSubmitHandler = (event) => {
     event.preventDefault()
     let tmpContact = {
+      _id: this.state._id,
       name: {
         first: this.state["name.first"],
         last: this.state["name.last"]
@@ -81,8 +57,7 @@ class ContactForm extends Component {
     const firstNameError = errors && errors.fields["name.first"]
     const phoneError = errors && errors.fields.phone
     const emailError = errors && errors.fields.email
-    console.log('contact-from render method')
-    console.log(this.props)
+    
     return (
       <Form className="ui form" onSubmit = {this.onSubmitHandler}>
         <TextField name="name.first" label="First Name" defaultValue={this.state["name.first"]} 
@@ -93,7 +68,7 @@ class ContactForm extends Component {
                   error= {phoneError} onChange={this.changeEventHandler} />
         <TextField name="email" label="Email" defaultValue={this.state.email} 
                   error= {emailError} onChange={this.changeEventHandler} />
-        <Button>Submit</Button>
+        <Button>{this.state.create ? "Create" : "Update"}</Button>
       </Form>    
     )
   }

@@ -2,27 +2,26 @@ import React from 'react'
 import ContactForm from "../components/contact-form";
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { newContact, saveContact, fetchContact, updateContact } from '../actions/contact-actions'
+import { newContact, saveContact, fetchContact, updateContact, getLocalContact } from '../actions/contact-actions'
 
 class ContactFormPage extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            redirect: false
+            redirect: false,
+            update: false
         }
     }
 
-    componentDidMount()
+    componentWillMount()
     {
         const {id} = this.props.match.params;
-        console.log(this.props)
-        if(id)
-        {
-            this.props.fetchContact(id)
-        }
-        else 
-        {
+        if(!id) {
             this.props.newContact()
+        }
+        else {
+            this.setState({update: true})
+            this.props.getLocalContact(id)
         }
     }
 
@@ -47,13 +46,20 @@ class ContactFormPage extends React.Component {
         }
     }
     render() {
+
+        let contact = this.props.contact
+        if(!this.state.update) {
+            contact = {_id: null, name:{first: "", last: ""}, phone:"", email:""}
+        }
         return (
             <div>
-            <h1>Contact form page</h1>
-            {
-                this.state.redirect ?
-                <Redirect  to="/" /> :
-                <ContactForm contact={this.props.contact}  errors={this.props.error} onSubmit = {this.submitHandler} />
+            <h1>{this.state.update ? "Update Contact" : "Create Contact" }</h1>
+            {         
+                contact === null ? <div>Loading ...</div> : 
+                (
+                    this.state.redirect ? <Redirect  to="/" /> :
+                    <ContactForm contact = {contact}  errors={this.props.error} onSubmit = {this.submitHandler} />
+                )
             }
             </div>
         )
@@ -66,4 +72,4 @@ function mapStateToProps(state) {
         error: state.contactStore.error
     }
 }
-export default connect(mapStateToProps, {newContact, saveContact, fetchContact, updateContact})(ContactFormPage)
+export default connect(mapStateToProps, {newContact, saveContact, fetchContact, updateContact, getLocalContact})(ContactFormPage)

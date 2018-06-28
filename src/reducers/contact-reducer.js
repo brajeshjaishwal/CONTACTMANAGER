@@ -3,7 +3,7 @@ import { updateContact } from "../actions/contact-actions";
 
 const initialState = {
     contacts: [],
-    contact: {},
+    contact: null,
     loading: false,
     error: null
 }
@@ -19,6 +19,7 @@ export default (state = initialState, action = {}) => {
         case Globals.FETCH_ALL_PENDING:
             return {
                 ...state,
+                contact: null,
                 loading: true,
                 error: null
             }
@@ -38,20 +39,29 @@ export default (state = initialState, action = {}) => {
         case Globals.NEW_CONTACT:
             return {
                 ...state,
-                contact: {},
+                contact: {_id: null, name: {first: "", last: ""}, phone: "", email: ""},
+                loading: false,
+                error: null
+            }
+        case Globals.GET_LOCAL:
+            const id = action.payload
+            return {
+                ...state,
+                contact: state.contacts.find(c => c._id === id),
                 loading: false,
                 error: null
             }
         case Globals.SAVE_PENDING:
             return {
                 ...state,
+                contact: null,
                 loading: true,
                 error: null
             }
         case Globals.SAVE_FULFILLED:
             return {
                 ...state,
-                contact: [...state.contacts, action.payload.data.data || action.payload.data],
+                contacts: [...state.contacts, action.payload.data.data || action.payload.data],
                 loading: false,
                 error: null
             }
@@ -67,7 +77,7 @@ export default (state = initialState, action = {}) => {
         case Globals.FETCH_PENDING:
             return {
                 ...state,
-                contact: { name: {}},
+                contact: null,
                 error: null,
                 loading: true
             }
@@ -87,6 +97,7 @@ export default (state = initialState, action = {}) => {
         case Globals.UPDATE_PENDING:
             return {
                 ...state,
+                contact: null,
                 error: null,
                 loading: true
             }
@@ -109,6 +120,7 @@ export default (state = initialState, action = {}) => {
         case Globals.DELETE_PENDING:
             return {
                 ...state,
+                contact: null,
                 error: null,
                 loading: true
             }
