@@ -43,11 +43,11 @@ class ContactForm extends Component {
     console.log("component will receive porps")
     console.log(contact)
     this.state = {
-      _id: this.contact._id,
-      "name.first": this.contact["name.first"] || "",
-      "name.last": this.contact["name.last"] ||  "" ,
-      phone: this.contact.phone || "",
-      email: this.contact.email || ""
+      _id: contact._id,
+      "name.first": contact["name.first"] || "",
+      "name.last": contact["name.last"] ||  "" ,
+      phone: contact.phone || "",
+      email: contact.email || ""
     };
     console.log('updated state')
     console.log(this.state)
