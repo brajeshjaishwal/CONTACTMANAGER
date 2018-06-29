@@ -24,12 +24,11 @@ class ContactForm extends Component {
     let contact = this.props.contact
 
     this.state = {
-      _id: contact._id,
       "name.first": contact.name.first,
       "name.last": contact.name.last,
       phone: contact.phone,
       email: contact.email,
-      create: contact._id === null
+      create: contact._id === undefined
     };
   }
   
@@ -40,7 +39,6 @@ class ContactForm extends Component {
   onSubmitHandler = (event) => {
     event.preventDefault()
     let tmpContact = {
-      _id: this.state._id,
       name: {
         first: this.state["name.first"],
         last: this.state["name.last"]

@@ -26,7 +26,11 @@ class ContactFormPage extends React.Component {
     }
 
     submitHandler = (contact) => {
-        if(contact._id) {
+        if(this.props.contact._id) {
+            console.log("submit handler")
+            console.log(contact)
+            contact._id = this.props.contact._id
+            console.log(contact)
             this.props.updateContact(contact)
             .then(response => {
                 this.setState({redirect: true})
@@ -36,9 +40,11 @@ class ContactFormPage extends React.Component {
             })
         }
         else {
+            console.log(contact)
             this.props.saveContact(contact)
             .then(response => {
                 this.setState({redirect: true})
+
             })
             .catch(err => {
                 //console.log(err)
@@ -49,15 +55,16 @@ class ContactFormPage extends React.Component {
 
         let contact = this.props.contact
         if(!this.state.update) {
-            contact = {_id: null, name:{first: "", last: ""}, phone:"", email:""}
+            contact = { name:{first: "", last: ""}, phone:"", email:""}
         }
+        console.log(contact)
         return (
             <div>
             <h1>{this.state.update ? "Update Contact" : "Create Contact" }</h1>
-            {         
-                contact === null ? <div>Loading ...</div> : 
+            {   
+                this.state.redirect ? <Redirect  to="/" /> :
                 (
-                    this.state.redirect ? <Redirect  to="/" /> :
+                    contact === null ? <div>Loading ...</div> :
                     <ContactForm contact = {contact}  errors={this.props.error} onSubmit = {this.submitHandler} />
                 )
             }
