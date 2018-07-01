@@ -44,3 +44,10 @@ export const getLocalContact = (id) => {
         payload: id
     }
 }
+
+export const deleteContact = (id) => {
+    return {
+        type: Globals.DELETE,
+        payload: client.delete(`${url}/${id}`)
+    }
+}
