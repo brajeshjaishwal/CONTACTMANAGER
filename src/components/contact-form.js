@@ -28,7 +28,6 @@ class ContactForm extends Component {
       "name.last": contact.name.last,
       phone: contact.phone,
       email: contact.email,
-      create: contact._id === undefined
     };
   }
   
@@ -66,7 +65,7 @@ class ContactForm extends Component {
                   error= {phoneError} onChange={this.changeEventHandler} />
         <TextField name="email" label="Email" defaultValue={this.state.email} 
                   error= {emailError} onChange={this.changeEventHandler} />
-        <Button>{this.state.create ? "Create" : "Update"}</Button>
+        <Button>{this.props.update ? "Update" : "Create"}</Button>
       </Form>    
     )
   }

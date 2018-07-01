@@ -5,7 +5,8 @@ import './App.css';
 import { Container } from 'semantic-ui-react';
 import { Route } from 'react-router-dom'
 import ContactListPage from './pages/contact-list-page';
-import ContactFormPage from './pages/contact-form-page';
+import UpdateContactFormPage from './pages/update-contact-form-page';
+import CreateContactFormPage from './pages/create-contact-form-page';
 
 class App extends Component {
   render() {
@@ -17,8 +18,8 @@ class App extends Component {
             <NavLink className="item" activeClassName="active" exact to = "/contacts/new" >Add Contact</NavLink>
           </div>
           <Route exact path="/" component={ContactListPage}></Route>
-          <Route exact path="/contacts/new" component={ContactFormPage}></Route>
-          <Route exact path="/contacts/edit/:id" component={ContactFormPage}></Route>
+          <Route exact path="/contacts/new" component={CreateContactFormPage}></Route>
+          <Route exact path="/contacts/edit/:id" component={UpdateContactFormPage}></Route>
         </Container>
       </BrowserRouter>
     );
