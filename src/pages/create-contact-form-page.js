@@ -1,7 +1,10 @@
 import React from 'react'
 import ContactForm from "../components/contact-form";
+import { ContactForm as ContactForm_ReduxForm } from '../components/contact-form.redux-form'
+import { ContactForm as ContactForm_Formic } from '../components/contact-form.formic'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { SubmissionError } from 'redux-form'
 import { newContact, saveContact } from '../actions/contact-actions'
 
 class CreateContactFormPage extends React.Component {
@@ -22,10 +25,9 @@ class CreateContactFormPage extends React.Component {
         this.props.saveContact(contact)
         .then(response => {
             this.setState({redirect: true})
-
         })
         .catch(err => {
-            //console.log(err)
+            throw new SubmissionError(this.props.error)
         })
     }
     render() {
@@ -33,11 +35,16 @@ class CreateContactFormPage extends React.Component {
 
         return (
             <div>
-            <h1>"Create Contact"</h1>
+            <h1>Create Contact</h1>
             {   
                 this.state.redirect ? 
                     <Redirect  to="/" /> :
-                    <ContactForm contact = {contact}  errors={this.props.error} onSubmit = {this.submitHandler} />
+                    <ContactForm 
+                        update= {false}
+                        contact = {contact}  
+                        errors={this.props.error} 
+                        loading = {this.props.loading}
+                        onSubmit = {this.submitHandler} />
                 
             }
             </div>

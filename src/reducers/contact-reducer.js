@@ -4,6 +4,7 @@ const initialState = {
     contacts: [],
     contact: null,
     loading: false,
+    redirect: false,
     error: null
 }
 
@@ -96,6 +97,7 @@ export default (state = initialState, action = {}) => {
         case Globals.UPDATE_PENDING:
             return {
                 ...state,
+                redirect: false,
                 contact: null,
                 error: null,
                 loading: true
@@ -104,6 +106,7 @@ export default (state = initialState, action = {}) => {
             const updatedContact = action.payload.data.data || action.payload.data
             return {
                 ...state,
+                redirect: true,
                 contacts: state.contacts.map(item => item._id === updatedContact._id ? updatedContact : item),
                 contact: updatedContact,
                 loading: false

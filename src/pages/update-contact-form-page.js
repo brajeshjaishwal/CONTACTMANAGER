@@ -1,15 +1,16 @@
 import React from 'react'
-import ContactForm from "../components/contact-form";
+//import ContactForm from '../components/contact-form.redux-form'
+import ContactForm  from '../components/contact-form.formic'
+//import ContactForm from "../components/contact-form";
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { SubmissionError } from 'redux-form'
 import { updateContact, getLocalContact } from '../actions/contact-actions'
 
 class UpdateContactFormPage extends React.Component {
     constructor(props){
         super(props)
-        this.state = {
-            redirect: false
-        }
+        this.submitHandler = this.submitHandler.bind(this)
     }
 
     componentWillMount()
@@ -22,32 +23,36 @@ class UpdateContactFormPage extends React.Component {
         contact._id = this.props.contact._id
         this.props.updateContact(contact)
         .then(response => {
-            this.setState({redirect: true})
-            console.log("submitHandler:" + this.state.redirect)
+            console.log(this.props)
         })
         .catch(err => {
-            //console.log(err)
+            throw new SubmissionError(this.props.error)
         })
     }
+
+    shouldComponentUpdate(nextProps) {
+        return this.props.contact !== nextProps.contact
+    } 
 
     render() {
 
         let contact = this.props.contact
-        console.log('update contact from page render')
+        console.log('update contact form page render')
         console.log(contact)
         return (
             <div>
-            <h1>"Update Contact"</h1>
+            <h1>Update Contact</h1>
             {   
-                this.state.redirect ? <Redirect  to="/" /> :
+                this.props.redirect ? <Redirect  to="/" /> :
                 (
                     contact === null || contact === undefined? 
                     <div>Loading ...</div> :
-                    <ContactForm 
+                    <ContactForm
                         update = {true}
-                        contact = {contact} 
+                        contact = {contact}
                         errors = {this.props.error}
-                        onSubmit = {this.submitHandler} />
+                        loading = {this.props.loading}
+                        onSubmitHandler = {this.submitHandler} />
                 )
             }
             </div>
@@ -58,7 +63,8 @@ class UpdateContactFormPage extends React.Component {
 function mapStateToProps(state) {
     return {
         contact: state.contactStore.contact,
-        error: state.contactStore.error
+        error: state.contactStore.error,
+        redirect: state.contactStore.redirect
     }
 }
 export default connect(mapStateToProps, { updateContact, getLocalContact })(UpdateContactFormPage)
